@@ -1,8 +1,13 @@
 import Link from "next/link";
+import style1 from '@/styles/app.module.css';
+import style2 from '@/styles/list_product.module.css';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import AppHeader from '@/components/app.header';
+import AppFooter from '@/components/app.footer';
+import Container from 'react-bootstrap/Container';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,16 +24,21 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <header>
-          <div id="menu">menu
+          {/* <div id="menu">menu
             <ul>
               <li><Link href={"/"}>Trang chủ</Link></li>
               <li><Link href={"/admin/list_product"}>Xem sản phẩm</Link></li>
               <li><Link href={"/admin/add_product"}>Thêm sản phẩm</Link></li>
             </ul>
-          </div>
+          </div> */}
+          <AppHeader />
         </header>
-        {children}
-        <footer>footer</footer>
+        <Container>
+          {children}
+        </Container>
+        <footer>
+          <AppFooter />
+        </footer>
       </body>
     </html>
   );

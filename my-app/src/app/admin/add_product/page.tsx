@@ -2,10 +2,10 @@
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
- 
-const add_product = () =>{
+
+const add_product = () => {
     const router = useRouter();
-    const handleBtn = () =>{
+    const handleBtn = () => {
         alert("Thêm sản phẩm thành công");
         router.push("/");
     }
