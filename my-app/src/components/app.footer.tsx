@@ -6,7 +6,7 @@ function AppFooter() {
   return (
     <CardGroup>
       <Card>
-        <Card.Img variant="top" src="holder.js/100px160" />
+        {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
         <Card.Body>
           <Card.Title>Card title</Card.Title>
           <Card.Text>
@@ -19,7 +19,7 @@ function AppFooter() {
         </Card.Footer>
       </Card>
       <Card>
-        <Card.Img variant="top" src="holder.js/100px160" />
+        {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
         <Card.Body>
           <Card.Title>Card title</Card.Title>
           <Card.Text>
@@ -32,7 +32,7 @@ function AppFooter() {
         </Card.Footer>
       </Card>
       <Card>
-        <Card.Img variant="top" src="holder.js/100px160" />
+        {/* <Card.Img variant="top" src="holder.js/100px160" /> */}
         <Card.Body>
           <Card.Title>Card title</Card.Title>
           <Card.Text>
