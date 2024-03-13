@@ -2,34 +2,26 @@
 import style1 from '@/styles/app.module.css';
 import style2 from '@/styles/list_product.module.css';
 import Link from "next/link";
-import { useEffect } from 'react';
 import useSWR from 'swr';
+import AppTable from  "@/components/app.table";
+
 export default function Home() {
   const fetcher = (url:string) => fetch(url).then((res) => res.json());
 
   const { data, error, isLoading } = useSWR(
     "http://localhost:8000/blogs",
     fetcher, {
+      //revalidateIfStale nếu false SWR sẽ không tự động làm cho có lại dữ liệu nếu nó đã cũ
       revalidateIfStale: false,
+      //revalidateOnFocus nếu false thì SWR sẽ không tự động làm cho nó lại dữ liệu khi cửa sổ window hay tab trình duyệt được focus lại
       revalidateOnFocus: false,
+      //revalidateOnReconnect nếu false thì sẽ không tự động làm cho có lại dữ liệu khi kết nối mạng được khôi phục
       revalidateOnReconnect: false
     }
   );
-  if (data) {
-    console.log(">>>check data:", data);
-  } else {
-    console.log("Dữ liệu đang được tải...");
+  if (!data) {
+    return <div>Loading...</div>
   }
-
-//sử dụng useEffect để lấy dữ liệu từ server
-  // useEffect(()=>{
-  //    const fetchData = async() =>{
-  //     const res=await fetch("http://localhost:8000/blogs");
-  //     const data=await  res.json();
-  //     console.log(">>>check res:",data);
-  //    }
-  //    fetchData();
-  // },[])
   return (
     // Bọc tất cả các <div> trong một <div> chính
     <div>
@@ -44,6 +36,9 @@ export default function Home() {
       <div>
         <Link href={"/admin/add_product"}>Thêm sản phẩm</Link>
       </div>
+      <AppTable
+      blogs={data}
+      />
     </div>
   );
 }
