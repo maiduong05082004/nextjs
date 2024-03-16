@@ -13,7 +13,7 @@ function AppHeader() {
           <Nav className="me-auto">
             <Link href={"/"} className='nav-link'>Trang chủ</Link>
             <Link href={"/admin/list_product"} className='nav-link'>Hiển thị sản phẩm</Link>
-            <Link href={"/admin/add_product"} className='nav-link'>Sửa sản phẩm</Link>
+            <Link href={"/blogs"} className='nav-link'>Blogs</Link>
             {/*             
             <Nav.Link href="/">Trang chủ</Nav.Link>
             <Nav.Link href="/admin/list_product">Hiển thị sản phẩm</Nav.Link>
