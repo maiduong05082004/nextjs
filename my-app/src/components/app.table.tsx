@@ -3,12 +3,15 @@ import Table from 'react-bootstrap/Table';
 import { Button } from 'react-bootstrap';
 import CreateModal from './create.modal';
 import { useState } from 'react';
+import UpdateModal from './update.model';
 interface Iprops {
     blogs: Iblog[]
 }
 const AppTable = (props: Iprops) => {
     const { blogs } = props;
+    const [blog,setBlog] = useState<Iblog|null>(null);
     const [showModalCreate,setShowModalCreate]=useState<boolean>(false);
+    const [showModalUpdate,setShowModalUpdate]=useState<boolean>(false);
     return (
         <>
         <div className='mb-3' style={{display:"flex",justifyContent:"space-between"}}>
@@ -26,16 +29,16 @@ const AppTable = (props: Iprops) => {
                 </tr>
             </thead>
             <tbody>
-                {blogs.map(blog => {
+                {blogs.map(item => {
                     return (
-                        <tr key={blog.id}>
-                            <td>{blog.id}</td>
-                            <td>{blog.title}</td>
-                            <td>{blog.author}</td>
+                        <tr key={item.id}>
+                            <td>{item.id}</td>
+                            <td>{item.title}</td>
+                            <td>{item.author}</td>
                             {/* <td>{blog.content}</td> */}
                             <td className='col-md-3'>
                                 <Button>View</Button>
-                                <Button variant="primary" className='mx-3'>Edit</Button>
+                                <Button variant="primary" className='mx-3' onClick={()=>{setBlog(item) ; setShowModalUpdate(true);}}>Edit</Button>
                                 <Button variant="danger" >Edit</Button>
                             </td>
                         </tr>
@@ -46,6 +49,12 @@ const AppTable = (props: Iprops) => {
         <CreateModal
         showModalCreate={showModalCreate}
         setShowModalCreate={setShowModalCreate}
+        />
+        <UpdateModal
+        showModalUpdate={showModalUpdate}
+        setShowModalUpdate={setShowModalUpdate}
+        blog={blog}
+        setBlog={setBlog}
         />
         </>
     );

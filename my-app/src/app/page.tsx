@@ -37,7 +37,9 @@ export default function Home() {
         <Link href={"/admin/add_product"}>Thêm sản phẩm</Link>
       </div>
       <AppTable
-      blogs={data}
+      blogs={data?.sort(function(a:any,b:any){
+        return b.id-a.id
+      })}
       />
     </div>
   );

@@ -2,24 +2,36 @@
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { headers } from 'next/headers';
 import { mutate } from 'swr';
 interface Iprops {
-  showModalCreate: boolean;
-  setShowModalCreate: (value: boolean) => void;
+  showModalUpdate: boolean;
+  setShowModalUpdate: (value: boolean) => void;
+  blog:Iblog|null;
+  setBlog:(value:Iblog|null)=>void;
 }
-function CreateModal($props: Iprops) {
-  const { showModalCreate, setShowModalCreate } = $props;
+function UpdateModal($props: Iprops) {
+  
+  const { showModalUpdate, setShowModalUpdate,blog,setBlog } = $props;
+  const [id,setId] = useState<number>(0);
   const [title, setTitle] = useState<string>("");
   const [author, setAuthor] = useState<string>("");
   const [content, setContent] = useState<string>("");
+  useEffect(()=>{
+  if(blog&&blog.id){
+  setId(blog.id);
+  setTitle(blog.title);
+  setAuthor(blog.author);
+  setContent(blog.content);
+  }},[blog]);
   const handleCloseModal = () => {
     setTitle("");
     setAuthor("");
     setContent("");
-    setShowModalCreate(false);
+    setBlog(null);
+    setShowModalUpdate(false);
   }
   const handleSubmit = () => {
     if (!title) {
@@ -34,17 +46,17 @@ function CreateModal($props: Iprops) {
       toast.error("Not empty content");
       return;
     }
-    fetch("http://localhost:8000/blogs", {
+    fetch(`http://localhost:8000/blogs/${id}`, {
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify({ title, author, content })
     }).then(res => res.json())
       .then(res => {
         if (res) {
-          toast.success('Create new blog succed !...');
+          toast.warning('Create new blog succed !...');
           handleCloseModal();
           mutate("http://localhost:8000/blogs");
         }
@@ -61,7 +73,7 @@ function CreateModal($props: Iprops) {
   return (
     <>
       <Modal
-        show={showModalCreate}
+        show={showModalUpdate}
         onHide={() => handleCloseModal()}
         backdrop="static"
         keyboard={false}
@@ -105,4 +117,4 @@ function CreateModal($props: Iprops) {
   );
 }
 
-export default CreateModal;
+export default UpdateModal;
