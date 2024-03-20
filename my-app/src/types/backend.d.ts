@@ -10,6 +10,3 @@ interface IProduct{
     price:number,
     quantily:number
 }
-interface Iprops{
-    blog:Iblog|null;
-}

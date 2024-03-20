@@ -1,19 +1,26 @@
 'use client'
-import { useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
+import useSWR,{Fetcher} from 'swr';
 const ViewDetailBlog=({params}:{params:{id:string}})=>{
-    useEffect(()=>{
-        
-    })
-
+    const fetcher: Fetcher<Iblog,string>=(url:string)=>fetch(url).then((res)=>res.json());
+    const {data,error,isLoading}=useSWR(
+        `http://localhost:8000/blogs/${params.id}`,
+        fetcher,{
+            revalidateIfStale:false,
+            revalidateOnFocus:false,
+            revalidateOnReconnect:false
+        }
+    );
+    if(isLoading){
+        return <div>Loading...</div>
+    }
     return (
-        <Card>
+        <Card className='mb-5'>
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
+        <Card.Title>Title: {data?.title}</Card.Title>
+        <Card.Subtitle className="mb-2 text-muted">Author: {data?.author}</Card.Subtitle>
         <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
+          Content: {data?.content}
         </Card.Text>
         <Card.Link href="../blogs">Go Back Blogs</Card.Link>
       </Card.Body>
