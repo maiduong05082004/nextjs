@@ -1,8 +1,12 @@
-'use client'
 import style1 from '@/styles/app.module.css';
 import style2 from '@/styles/list_product.module.css';
 import Link from "next/link";
+import type { Metadata } from 'next'
 
+export const metadata: Metadata = {
+  title: 'HomePage',
+  description: 'Hiển thị các Navigation',
+}
 export default function Home() {
   
   return (
