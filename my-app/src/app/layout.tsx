@@ -10,6 +10,7 @@ import AppFooter from '@/components/app.footer';
 import Container from 'react-bootstrap/Container';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { Bounce } from "react-toastify";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -52,6 +53,7 @@ export default function RootLayout({
           draggable
           pauseOnHover
           theme="light"
+          transition={Bounce}
         />
       </body>
     </html>

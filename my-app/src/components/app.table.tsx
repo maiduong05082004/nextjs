@@ -5,9 +5,40 @@ import CreateModal from './create.modal';
 import { useState } from 'react';
 import UpdateModal from './update.model';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
+import { Bounce } from 'react-toastify';
+import { mutate } from 'swr';
 interface Iprops {
     blogs: Iblog[]
 }
+const handleDeleteBlog=($id:number)=>{
+    if(confirm("Bạn có muốn xóa blog này không")){
+      fetch(`http://localhost:8000/blogs/${$id}`, {
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        method: "DELETE"
+        
+      }).then(res => res.json())
+        .then(res => {
+          if (res) {
+            toast.success('🦄 Xóa blog thành công!', {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              transition: Bounce,
+              }); 
+            mutate("http://localhost:8000/blogs");
+          }
+        });
+    }
+  }
 const AppTable = (props: Iprops) => {
     const { blogs } = props;
     const [blog,setBlog] = useState<Iblog|null>(null);
@@ -40,7 +71,7 @@ const AppTable = (props: Iprops) => {
                             <td className='col-md-3'>
                                 <Link href={`/blogs/${item.id}`} className='btn btn-primary'>View</Link>
                                 <Button variant="primary" className='mx-3' onClick={()=>{setBlog(item) ; setShowModalUpdate(true);}}>Edit</Button>
-                                <Button variant="danger" >Delete</Button>
+                                <Button variant="danger" onClick={()=>handleDeleteBlog(item.id)}>Delete</Button>
                             </td>
                         </tr>
                     )
